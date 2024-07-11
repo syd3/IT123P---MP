@@ -1,6 +1,11 @@
-﻿using Android.App;
+﻿using System;
+using System.Net;
+using System.IO;
+using Android.App;
 using Android.OS;
+using Android.Content;
 using Android.Runtime;
+using Android.Widget;
 using AndroidX.AppCompat.App;
 
 namespace IT123P___MP
@@ -8,12 +13,44 @@ namespace IT123P___MP
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
+        EditText edit1, edit2;
+        Button btn;
+        string username, password, res;
+
+        HttpWebRequest request;
+        HttpWebResponse response;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
+
+            edit1 = FindViewById<EditText>(Resource.Id.editText1);
+            edit2 = FindViewById<EditText>(Resource.Id.editText2);
+            btn = FindViewById<Button>(Resource.Id.button1);
+
+            btn.Click += this.Login;
+        }
+
+        public void Login(object sender, EventArgs e)
+        {
+            username = edit1.Text;
+            password = edit2.Text;
+
+            request = (HttpWebRequest)WebRequest.Create($"http://192.168.1.14/REST/IT123P/MP/user_login.php?uname={username}&pword={password}");
+            response = (HttpWebResponse)request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream());
+            res = reader.ReadToEnd();
+            Toast.MakeText(this, res, ToastLength.Long).Show();
+
+            if (res.Contains("Ok!"))
+            {
+                Intent i = new Intent(this, typeof(home));
+                i.PutExtra("name", username);
+                StartActivity(i);
+            }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

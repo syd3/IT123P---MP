@@ -44,10 +44,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText3" />
-    <Button
-        android:text="Create"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button1"
-        android:layout_margin="40px" />
+        android:layout_height="71.0dp"
+        android:id="@+id/linearLayout1" >
+        <Button
+            android:text="Back"
+            android:layout_width="172dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button1"
+            android:layout_margin="20px" />
+        <Button
+            android:text="Create"
+            android:layout_width="172dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button2"
+            android:layout_margin="20px" />
+    </LinearLayout>
 </LinearLayout>
