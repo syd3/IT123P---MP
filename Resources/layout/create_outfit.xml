@@ -40,7 +40,9 @@
                 android:layout_height="105.0dp"
                 android:id="@+id/upper_button"
                 android:layout_margin="15px"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -61,7 +63,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="105.0dp"
                 android:id="@+id/accessory1_button"
-                android:layout_margin="15px" />
+                android:layout_margin="15px"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -91,7 +95,9 @@
                 android:layout_height="105.0dp"
                 android:id="@+id/lower_button"
                 android:layout_margin="15px"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -112,7 +118,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="105.0dp"
                 android:id="@+id/accessory2_button"
-                android:layout_margin="15px" />
+                android:layout_margin="15px"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -142,7 +150,9 @@
                 android:layout_height="105.0dp"
                 android:id="@+id/feet_button"
                 android:layout_margin="15px"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -163,7 +173,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="105.0dp"
                 android:id="@+id/accessory3_button"
-                android:layout_margin="15px" />
+                android:layout_margin="15px"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

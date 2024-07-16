@@ -1,22 +1,34 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace IT123P___MP
 {
     [Activity(Label = "home")]
     public class home : Activity
     {
-        TextView txt;
+        // Layout needs to be fixed
+        // Currently the layout is janky, widget sizes need to be adjusted
+
+        // Need to find a better and more optimized way to transfer data between Activities
+        // Need to optimize the structure of the database
+        // Need more error handling in the API?
+        
+        // Since the foundation for displaying images has already been set up as well as the database
+        // Creating ViewOutfit and ViewClothing should be easy
+        // General idea is to just retrieve the values from the database and display it
+        // Menu for both methods should loop through how many data is available
+        // ^ Similar code can be found in the createOutfitSelection activity
+
+        // Missing:
+        // No ViewClothing layout yet
+        // Validation to ensure proper inputs and required fields have values
+
         Button viewOutfit, viewClothing, createOutfit, newClothes, logOut;
-        string name;
+        TextView txt;
+        public string name;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -37,7 +49,14 @@ namespace IT123P___MP
             viewClothing.Click += this.ViewClothing;
             createOutfit.Click += this.CreateOutfit;
             newClothes.Click += this.NewClothes;
-            logOut.Click += this.LogOut;
+
+            logOut.Click += delegate
+            {
+                Intent i = new Intent(this, typeof(MainActivity));
+                i.SetFlags(ActivityFlags.ReorderToFront); // Returns to the previous activity in the foreground
+                StartActivity(i);
+                Finish(); // Ensures that this current activity will not be running in the background afterwards
+            };
         }
 
         public void ViewOutfit(object sender, EventArgs e)
@@ -52,18 +71,14 @@ namespace IT123P___MP
 
         public void CreateOutfit(object sender, EventArgs e)
         {
-
+            Intent i = new Intent(this, typeof(createOutfit));
+            i.PutExtra("name", name);
+            StartActivity(i);
         }
 
         public void NewClothes(object sender, EventArgs e)
         {
 
-        }
-
-        public void LogOut(object sender, EventArgs e)
-        {
-            Intent i = new Intent(this, typeof(MainActivity));
-            StartActivity(i);
         }
     }
 }

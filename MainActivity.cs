@@ -24,7 +24,7 @@ namespace IT123P___MP
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            // Set our view from the "main" layout resource
+            
             SetContentView(Resource.Layout.activity_main);
 
             edit1 = FindViewById<EditText>(Resource.Id.editText1);
@@ -39,7 +39,7 @@ namespace IT123P___MP
             username = edit1.Text;
             password = edit2.Text;
 
-            request = (HttpWebRequest)WebRequest.Create($"http://192.168.1.14/REST/IT123P/MP/user_login.php?uname={username}&pword={password}");
+            request = (HttpWebRequest)WebRequest.Create($"http://192.168.1.14/REST/IT123P/MP/API/user_login.php?uname={username}&pword={password}");
             response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());
             res = reader.ReadToEnd();
