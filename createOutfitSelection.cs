@@ -10,6 +10,7 @@ using Google.Android.Material.Internal;
 using System.Drawing;
 using Android.Graphics;
 using System.Runtime.Remoting.Contexts;
+using System;
 
 namespace IT123P___MP
 {
@@ -54,22 +55,34 @@ namespace IT123P___MP
                 JsonElement element = root[i].Clone(); // Needed so that the Json Object is still accessible after being disposed
 
                 var imageBitmap = UtilityClass.GetImageBitmapFromUrl($"http://192.168.100.63/REST/IT123P/MP/img/{root[i]}.jpg");
-                //imageButtons[i].SetImageBitmap(imageBitmap);
-                //imageButtons[i].Click += delegate
 
                 Display d = this.WindowManager.DefaultDisplay;
                 Android.Util.DisplayMetrics m = new Android.Util.DisplayMetrics();
                 d.GetMetrics(m);
 
-                int width = (int)((m.WidthPixels - 8) / 2);
-                int height = (int)(120 * m.Density);
-                int newHeight = (int)((float)width/(float)imageBitmap.Width * imageBitmap.Height);
-                int y = (newHeight - height) / 2;
-                //Rectangle rec = new Rectangle(0, y, width, height);
-                imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, width, newHeight, true);
-                Android.Graphics.Bitmap bitmap = Android.Graphics.Bitmap.CreateBitmap(imageBitmap, 0, y, width, height);
-
-                ImageView child = (ImageView)LayoutInflater.Inflate(Resource.Layout.clothe_ll, null);
+                int w = (int)((m.WidthPixels - 8) / 2);
+                int h = (int)(120 * m.Density);
+                float ratio = (float) h / w;
+                int originalw = imageBitmap.Width;
+                int originalh = imageBitmap.Height;
+                float imageratio = (float)originalh / (float)originalw;
+                Android.Graphics.Bitmap bitmap = imageBitmap;
+                if (imageratio > ratio)
+                {
+                    int newh = (int)((float)w / (float)imageBitmap.Width * imageBitmap.Height);
+                    int y = Math.Max(0, (newh - h) / 2);
+                    imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, w, newh, true);
+                    bitmap = Android.Graphics.Bitmap.CreateBitmap(imageBitmap, 0, y, w, h);
+                }
+                else
+                {
+                    Toast.MakeText(this, $"{imageratio},{ratio},{imageratio < ratio}", ToastLength.Short).Show();
+                    int neww = (int)((float)h / (float)originalh * originalw);
+                    int x = Math.Max(0, (neww - w) / 2);
+                    imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, neww, h, true);
+                    bitmap = Android.Graphics.Bitmap.CreateBitmap(imageBitmap, x, 0, w, h);
+                }
+                ImageView child = (ImageView)LayoutInflater.Inflate(Resource.Layout.clothe_imgbtn, null);
                 child.SetScaleType(ImageView.ScaleType.CenterCrop);
 
                 child.SetImageBitmap(bitmap);
@@ -86,6 +99,11 @@ namespace IT123P___MP
 
                 container.AddView(child);
 
+                imageBitmap.Dispose();
+                bitmap.Dispose();
+                reader.Dispose();
+                response.Close();
+                response.Dispose();
             }
         }
     }
