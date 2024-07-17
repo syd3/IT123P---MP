@@ -38,7 +38,7 @@
                 android:src="@android:drawable/ic_input_delete"
                 android:layout_width="192dp"
                 android:layout_height="120dp"
-                android:id="@+id/imageButton1"
+                android:id="@+id/remove_btn"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true" />
         </com.google.android.material.internal.FlowLayout>

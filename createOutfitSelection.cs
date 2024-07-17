@@ -32,6 +32,7 @@ namespace IT123P___MP
             back = FindViewById<Button>(Resource.Id.button1);
             FlowLayout container = (FlowLayout)FindViewById<View>(Resource.Id.clothes_container);
 
+            string type = Intent.GetStringExtra("type");
             back.Click += delegate
             {
                 Intent i = new Intent(this, typeof(createOutfit));
@@ -39,8 +40,16 @@ namespace IT123P___MP
                 StartActivity(i);
                 Finish();
             };
-
-            string type = Intent.GetStringExtra("type");
+            FindViewById<ImageButton>(Resource.Id.remove_btn).Click += delegate
+            {
+                Intent t = new Intent(this, typeof(createOutfit));
+                t.PutExtra("fileName", String.Empty);
+                t.PutExtra("type", type);
+                t.SetFlags(ActivityFlags.ReorderToFront);
+                SetResult(Result.Ok, t); // Ensures that the appropriate data will be sent back
+                StartActivity(t);
+                Finish();
+            };
 
             request = (HttpWebRequest)WebRequest.Create($"http://192.168.100.63/REST/IT123P/MP/API/fetch_clothes.php?type={type}");
             response = (HttpWebResponse)request.GetResponse(); // Web Request to retrieve the file name of the images
@@ -76,7 +85,6 @@ namespace IT123P___MP
                 }
                 else
                 {
-                    Toast.MakeText(this, $"{imageratio},{ratio},{imageratio < ratio}", ToastLength.Short).Show();
                     int neww = (int)((float)h / (float)originalh * originalw);
                     int x = Math.Max(0, (neww - w) / 2);
                     imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, neww, h, true);

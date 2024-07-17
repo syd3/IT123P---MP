@@ -1,5 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Widget;
 using System;
@@ -13,6 +15,7 @@ namespace IT123P___MP
         Button random, next, back;
         public string upperImg, lowerImg, feetImg, acc1Img, acc2Img, acc3Img;
         int requestCode;
+        string type;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -57,38 +60,45 @@ namespace IT123P___MP
                 if (data != null && data.HasExtra("fileName"))
                 {
                     string fileName = data.GetStringExtra("fileName");
-                    string type = data.GetStringExtra("type");
 
                     // Retrieves an image from a URL
-                    var imgBm = UtilityClass.GetImageBitmapFromUrl($"http://192.168.100.63/REST/IT123P/MP/img/{fileName}.jpg");
+                    Android.Graphics.Bitmap imgBm = (Android.Graphics.Bitmap)null;
+                    if (fileName.Length == 0)
+                    {
+                        imgBm = BitmapFactory.DecodeResource(this.Resources, Android.Resource.Drawable.IcMenuGallery);
+                    }
+                    else
+                    {
+                        imgBm = UtilityClass.GetImageBitmapFromUrl($"http://192.168.100.63/REST/IT123P/MP/img/{fileName}.jpg");
+                    }
 
                     // Code below can probably be improved more, if possible find way to loop it instead
-                    if (type == "upper")
+                    if (this.type == "upper")
                     {
                         upper.SetImageBitmap(imgBm);
                         upperImg = fileName;
                     }
-                    else if (type == "lower")
+                    else if (this.type == "lower")
                     {
                         lower.SetImageBitmap(imgBm);
                         lowerImg = fileName;
                     }
-                    else if (type == "feet")
+                    else if (this.type == "feet")
                     {
                         feet.SetImageBitmap(imgBm);
                         feetImg = fileName;
                     }
-                    else if (type == "acc1")
+                    else if (this.type == "acc1")
                     {
                         acc1.SetImageBitmap(imgBm);
                         acc1Img = fileName;
                     }
-                    else if (type == "acc2")
+                    else if (this.type == "acc2")
                     {
                         acc2.SetImageBitmap(imgBm);
                         acc2Img = fileName;
                     }
-                    else if (type == "acc3")
+                    else if (this.type == "acc3")
                     {
                         acc3.SetImageBitmap(imgBm);
                         acc3Img = fileName;
@@ -108,27 +118,33 @@ namespace IT123P___MP
             if (type == Resource.Id.upper_button)
             {
                 outfitType = "upper";
+                this.type = "upper";
             } else if (type == Resource.Id.lower_button)
             {
                 outfitType = "lower";
-            } else if (type == Resource.Id.feet_button)
+                this.type = "lower";
+            }
+            else if (type == Resource.Id.feet_button)
             {
                 outfitType = "feet";
+                this.type = "feet";
             } else if (type == Resource.Id.accessory1_button)
             {
                 outfitType = "acc1";
+                this.type = "acc1";
             } else if (type == Resource.Id.accessory2_button)
             {
                 outfitType = "acc2";
+                this.type = "acc2";
             } else if (type == Resource.Id.accessory3_button)
             {
                 outfitType = "acc3";
-            } 
-            
+                this.type = "acc3";
+            }
+
             Intent i = new Intent(this, typeof(createOutfitSelection));
             i.PutExtra("type", outfitType);
             StartActivityForResult(i, requestCode);
-            //StartActivity(i);
         }
 
         public void RandomOutfit(object sender, EventArgs e)
@@ -142,16 +158,23 @@ namespace IT123P___MP
             string name = Intent.GetStringExtra("name");
 
             // Ensure first that the required fields such as upper, lower, and feet have values before proceeding
-            Intent i = new Intent(this, typeof(createOutfit2));
-            i.PutExtra("name", name);
-            i.PutExtra("upperImg", upperImg); // Required
-            i.PutExtra("lowerImg", lowerImg); // Required
-            i.PutExtra("feetImg", feetImg); // Required
-            i.PutExtra("acc1Img", acc1Img);
-            i.PutExtra("acc2Img", acc2Img);
-            i.PutExtra("acc3Img", acc3Img);
-            i.SetFlags(ActivityFlags.ReorderToFront);
-            StartActivity(i);
+            if (upperImg.Length == 0 || lowerImg.Length == 0 || feetImg.Length == 0)
+            {
+                Toast.MakeText(this, "Please fill out Upper, Lower, and Feet categories.",ToastLength.Short).Show();
+            }
+            else
+            {
+                Intent i = new Intent(this, typeof(createOutfit2));
+                i.PutExtra("name", name);
+                i.PutExtra("upperImg", upperImg); // Required
+                i.PutExtra("lowerImg", lowerImg); // Required
+                i.PutExtra("feetImg", feetImg); // Required
+                i.PutExtra("acc1Img", acc1Img);
+                i.PutExtra("acc2Img", acc2Img);
+                i.PutExtra("acc3Img", acc3Img);
+                i.SetFlags(ActivityFlags.ReorderToFront);
+                StartActivity(i);
+            }
         }
     }
 }
