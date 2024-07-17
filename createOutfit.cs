@@ -60,7 +60,7 @@ namespace IT123P___MP
                     string type = data.GetStringExtra("type");
 
                     // Retrieves an image from a URL
-                    var imgBm = UtilityClass.GetImageBitmapFromUrl($"http://192.168.1.14/REST/IT123P/MP/img/{fileName}.jpg");
+                    var imgBm = UtilityClass.GetImageBitmapFromUrl($"http://192.168.100.63/REST/IT123P/MP/img/{fileName}.jpg");
 
                     // Code below can probably be improved more, if possible find way to loop it instead
                     if (type == "upper")
@@ -105,22 +105,22 @@ namespace IT123P___MP
 
             // Code below can probably be improved more, if possible find way to loop it instead
             // Converts the int of a widget object into its respective string value
-            if (type == 2131230990)
+            if (type == Resource.Id.upper_button)
             {
                 outfitType = "upper";
-            } else if (type == 2131230883)
+            } else if (type == Resource.Id.lower_button)
             {
                 outfitType = "lower";
-            } else if (type == 2131230835)
+            } else if (type == Resource.Id.feet_button)
             {
                 outfitType = "feet";
-            } else if (type == 2131230759)
+            } else if (type == Resource.Id.accessory1_button)
             {
                 outfitType = "acc1";
-            } else if (type == 2131230760)
+            } else if (type == Resource.Id.accessory2_button)
             {
                 outfitType = "acc2";
-            } else if (type == 2131230761)
+            } else if (type == Resource.Id.accessory3_button)
             {
                 outfitType = "acc3";
             } 
@@ -128,6 +128,7 @@ namespace IT123P___MP
             Intent i = new Intent(this, typeof(createOutfitSelection));
             i.PutExtra("type", outfitType);
             StartActivityForResult(i, requestCode);
+            //StartActivity(i);
         }
 
         public void RandomOutfit(object sender, EventArgs e)

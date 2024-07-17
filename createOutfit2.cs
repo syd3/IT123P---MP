@@ -52,7 +52,7 @@ namespace IT123P___MP
         public void SaveOutfit(object sender, EventArgs e)
         {
             // Find a better way to call the API
-            string url = $"http://192.168.1.14/REST/IT123P/MP/API/save_outfit.php?user={name}&name={outfitName.Text}&occ={occasion.Text}&desc={desc.Text}&upper={upperImg}&lower={lowerImg}&feet={feetImg}&acc1={acc1Img}&acc2={acc2Img}&acc3={acc3Img}";
+            string url = $"http://192.168.100.63/REST/IT123P/MP/API/save_outfit.php?user={name}&name={outfitName.Text}&occ={occasion.Text}&desc={desc.Text}&upper={upperImg}&lower={lowerImg}&feet={feetImg}&acc1={acc1Img}&acc2={acc2Img}&acc3={acc3Img}";
             request = (HttpWebRequest)WebRequest.Create(url);
             response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());

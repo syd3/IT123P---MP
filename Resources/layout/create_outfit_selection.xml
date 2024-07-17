@@ -20,112 +20,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
         android:gravity="center" />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px"
+    
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:id="@+id/linearLayout1">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/scrollView1">
+        <com.google.android.material.internal.FlowLayout
             android:minWidth="25px"
             android:minHeight="25px"
-            android:layout_width="192dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/linearLayout2">
+            android:id="@+id/clothes_container"
+            android:layoutDirection="ltr"
+            >
             <ImageButton
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="match_parent"
+                android:src="@android:drawable/ic_input_delete"
+                android:layout_width="192dp"
                 android:layout_height="120dp"
                 android:id="@+id/imageButton1"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="192dp"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout3">
-            <ImageButton
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:id="@+id/imageButton2"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:id="@+id/linearLayout4">
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="192dp"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout5">
-            <ImageButton
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:id="@+id/imageButton3"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="192dp"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout6">
-            <ImageButton
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:id="@+id/imageButton4"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:id="@+id/linearLayout7">
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="192dp"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout8">
-            <ImageButton
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:id="@+id/imageButton5"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="192dp"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout9" />
-    </LinearLayout>
+        </com.google.android.material.internal.FlowLayout>
+    </ScrollView>
+    
+    
+    
     <Button
         android:text="Back"
         android:layout_width="match_parent"

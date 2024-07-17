@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using Android.Widget;
+using Java.Lang;
 using System;
 
 namespace IT123P___MP
@@ -50,13 +51,24 @@ namespace IT123P___MP
             createOutfit.Click += this.CreateOutfit;
             newClothes.Click += this.NewClothes;
 
-            logOut.Click += delegate
-            {
-                Intent i = new Intent(this, typeof(MainActivity));
-                i.SetFlags(ActivityFlags.ReorderToFront); // Returns to the previous activity in the foreground
-                StartActivity(i);
-                Finish(); // Ensures that this current activity will not be running in the background afterwards
-            };
+            logOut.Click += LogOut_Click;
+        }
+        public void LogOut()
+        {
+            Intent i = new Intent(this, typeof(MainActivity));
+            // i.SetFlags(ActivityFlags.ReorderToFront); // Returns to the previous activity in the foreground
+            StartActivity(i);
+            Finish(); // Ensures that this current activity will not be running in the background afterwards
+        }
+        public void LogOut_Click(object sender, EventArgs e)
+        {
+            LogOut();
+        }
+        // this method is implemented to go back to the previous login page which has been finished
+        // the logout function starts a new login page
+        public override void OnBackPressed()
+        {
+            LogOut();
         }
 
         public void ViewOutfit(object sender, EventArgs e)

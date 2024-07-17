@@ -66,6 +66,7 @@
     <Compile Include="createOutfitSelection.cs" />
     <Compile Include="home.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Outfit.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilityClass.cs" />
@@ -152,6 +153,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\view_clothing_2.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\clothe_imgbtn.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\clothe_ll.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -5,6 +5,11 @@ using Android.Widget;
 using System.IO;
 using System.Net;
 using System.Text.Json;
+using Android.Views;
+using Google.Android.Material.Internal;
+using System.Drawing;
+using Android.Graphics;
+using System.Runtime.Remoting.Contexts;
 
 namespace IT123P___MP
 {
@@ -23,16 +28,8 @@ namespace IT123P___MP
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.create_outfit_selection);
 
-            var imageButtons = new ImageButton[]
-            {
-                imb1 = FindViewById<ImageButton>(Resource.Id.imageButton1),
-                imb2 = FindViewById<ImageButton>(Resource.Id.imageButton2),
-                imb3 = FindViewById<ImageButton>(Resource.Id.imageButton3),
-                imb4 = FindViewById<ImageButton>(Resource.Id.imageButton4),
-                imb5 = FindViewById<ImageButton>(Resource.Id.imageButton5)
-            };
-
             back = FindViewById<Button>(Resource.Id.button1);
+            FlowLayout container = (FlowLayout)FindViewById<View>(Resource.Id.clothes_container);
 
             back.Click += delegate
             {
@@ -44,7 +41,7 @@ namespace IT123P___MP
 
             string type = Intent.GetStringExtra("type");
 
-            request = (HttpWebRequest)WebRequest.Create($"http://192.168.1.14/REST/IT123P/MP/API/fetch_clothes.php?type={type}");
+            request = (HttpWebRequest)WebRequest.Create($"http://192.168.100.63/REST/IT123P/MP/API/fetch_clothes.php?type={type}");
             response = (HttpWebResponse)request.GetResponse(); // Web Request to retrieve the file name of the images
             StreamReader reader = new StreamReader(response.GetResponseStream());
             res = reader.ReadToEnd();
@@ -56,9 +53,27 @@ namespace IT123P___MP
             {
                 JsonElement element = root[i].Clone(); // Needed so that the Json Object is still accessible after being disposed
 
-                var imageBitmap = UtilityClass.GetImageBitmapFromUrl($"http://192.168.1.14/REST/IT123P/MP/img/{root[i]}.jpg");
-                imageButtons[i].SetImageBitmap(imageBitmap);
-                imageButtons[i].Click += delegate
+                var imageBitmap = UtilityClass.GetImageBitmapFromUrl($"http://192.168.100.63/REST/IT123P/MP/img/{root[i]}.jpg");
+                //imageButtons[i].SetImageBitmap(imageBitmap);
+                //imageButtons[i].Click += delegate
+
+                Display d = this.WindowManager.DefaultDisplay;
+                Android.Util.DisplayMetrics m = new Android.Util.DisplayMetrics();
+                d.GetMetrics(m);
+
+                int width = (int)((m.WidthPixels - 8) / 2);
+                int height = (int)(120 * m.Density);
+                int newHeight = (int)((float)width/(float)imageBitmap.Width * imageBitmap.Height);
+                int y = (newHeight - height) / 2;
+                //Rectangle rec = new Rectangle(0, y, width, height);
+                imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, width, newHeight, true);
+                Android.Graphics.Bitmap bitmap = Android.Graphics.Bitmap.CreateBitmap(imageBitmap, 0, y, width, height);
+
+                ImageView child = (ImageView)LayoutInflater.Inflate(Resource.Layout.clothe_ll, null);
+                child.SetScaleType(ImageView.ScaleType.CenterCrop);
+
+                child.SetImageBitmap(bitmap);
+                child.Click += delegate
                 {
                     Intent t = new Intent(this, typeof(createOutfit));
                     t.PutExtra("fileName", element.ToString());
@@ -68,6 +83,9 @@ namespace IT123P___MP
                     StartActivity(t);
                     Finish();
                 };
+
+                container.AddView(child);
+
             }
         }
     }
