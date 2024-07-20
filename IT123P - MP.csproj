@@ -70,6 +70,10 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilityClass.cs" />
+    <Compile Include="viewClothing.cs" />
+    <Compile Include="viewClothing2.cs" />
+    <Compile Include="viewOutfit.cs" />
+    <Compile Include="viewOutfit2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -159,6 +163,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\clothe_imgbtn.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\outfit_button.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

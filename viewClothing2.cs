@@ -1,23 +1,24 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Widget;
-using System.IO;
-using System.Net;
-using System.Text.Json;
+using Android.Runtime;
 using Android.Views;
+using Android.Widget;
 using Google.Android.Material.Internal;
-using System.Drawing;
-using Android.Graphics;
-using System.Runtime.Remoting.Contexts;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Net;
+using System.IO;
+using System.Text.Json;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "createOutfitSelection")]
-    public class createOutfitSelection : Activity
+    [Activity(Label = "viewClothing2")]
+    public class viewClothing2 : Activity
     {
-        ImageButton imb1, imb2, imb3, imb4, imb5;
+        TextView clothingType;
         Button back;
         string res;
 
@@ -27,43 +28,50 @@ namespace IT123P___MP
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.create_outfit_selection);
+            SetContentView(Resource.Layout.view_clothing_2);
 
+            clothingType = FindViewById<TextView>(Resource.Id.textView2);
             back = FindViewById<Button>(Resource.Id.button1);
-            FlowLayout container = (FlowLayout)FindViewById<View>(Resource.Id.clothes_container);
 
-            string local_ip = UtilityClass.ip;
-            string type = Intent.GetStringExtra("type");
             back.Click += delegate
             {
-                Intent i = new Intent(this, typeof(createOutfit));
+                Intent i = new Intent(this, typeof(viewClothing));
                 i.SetFlags(ActivityFlags.ReorderToFront);
                 StartActivity(i);
                 Finish();
             };
-            FindViewById<Button>(Resource.Id.remove_btn).Click += delegate
-            {
-                Intent t = new Intent(this, typeof(createOutfit));
-                t.PutExtra("fileName", String.Empty);
-                t.PutExtra("type", type);
-                t.SetFlags(ActivityFlags.ReorderToFront);
-                SetResult(Result.Ok, t); // Ensures that the appropriate data will be sent back
-                StartActivity(t);
-                Finish();
-            };
 
-            request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/fetch_clothes.php?type={type}");
-            response = (HttpWebResponse)request.GetResponse(); // Web Request to retrieve the file name of the images
+            string type = Intent.GetStringExtra("type");
+            if (type == "upper")
+            {
+                ShowClothing("upper");
+            } else if (type == "lower")
+            {
+                ShowClothing("lower");
+            } else if (type == "feet")
+            {
+                ShowClothing("feet");
+            } else if (type == "acc")
+            {
+                // Include acc2 and acc3
+                ShowClothing("acc1");
+            }
+        }
+
+        public void ShowClothing(string clothing)
+        {
+            FlowLayout container = FindViewById<FlowLayout>(Resource.Id.clothes_container);
+
+            string local_ip = UtilityClass.ip;
+            request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/fetch_clothes.php?type={clothing}");
+            response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());
             res = reader.ReadToEnd();
-            using JsonDocument doc = JsonDocument.Parse(res); // Parse the web response since the API returns a Json object
-            JsonElement root = doc.RootElement; // This will return an array
+            using JsonDocument doc = JsonDocument.Parse(res);
+            JsonElement root = doc.RootElement;
 
-            // Loops through each file name found and sets the appropriate image for each imagebutton
             for (int i = 0; i < root.GetArrayLength(); i++)
             {
-                JsonElement element = root[i].Clone(); // Needed so that the Json Object is still accessible after being disposed
-
                 var imageBitmap = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[i]}.jpg");
 
                 Display d = this.WindowManager.DefaultDisplay;
@@ -72,7 +80,7 @@ namespace IT123P___MP
 
                 int w = (int)((m.WidthPixels - 8) / 2);
                 int h = (int)(120 * m.Density);
-                float ratio = (float) h / w;
+                float ratio = (float)h / w;
                 int originalw = imageBitmap.Width;
                 int originalh = imageBitmap.Height;
                 float imageratio = (float)originalh / (float)originalw;
@@ -91,28 +99,11 @@ namespace IT123P___MP
                     imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, neww, h, true);
                     bitmap = Android.Graphics.Bitmap.CreateBitmap(imageBitmap, x, 0, w, h);
                 }
+
                 ImageView child = (ImageView)LayoutInflater.Inflate(Resource.Layout.clothe_imgbtn, null);
                 child.SetScaleType(ImageView.ScaleType.CenterCrop);
-
                 child.SetImageBitmap(bitmap);
-                child.Click += delegate
-                {
-                    Intent t = new Intent(this, typeof(createOutfit));
-                    t.PutExtra("fileName", element.ToString());
-                    t.PutExtra("type", type);
-                    t.SetFlags(ActivityFlags.ReorderToFront);
-                    SetResult(Result.Ok, t); // Ensures that the appropriate data will be sent back
-                    StartActivity(t);
-                    Finish();
-                };
-
                 container.AddView(child);
-
-                imageBitmap.Dispose();
-                bitmap.Dispose();
-                reader.Dispose();
-                response.Close();
-                response.Dispose();
             }
         }
     }

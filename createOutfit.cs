@@ -69,7 +69,8 @@ namespace IT123P___MP
                     }
                     else
                     {
-                        imgBm = UtilityClass.GetImageBitmapFromUrl($"http://192.168.100.63/REST/IT123P/MP/img/{fileName}.jpg");
+                        string local_ip = UtilityClass.ip;
+                        imgBm = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{fileName}.jpg");
                     }
 
                     // Code below can probably be improved more, if possible find way to loop it instead

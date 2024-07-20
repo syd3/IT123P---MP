@@ -1,7 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:text="View Clothing"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/textView1"
+        android:gravity="center" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="120.0dp"
+        android:id="@+id/linearLayout1"
+        android:gravity="center">
+        <Button
+            android:text="Upper Body"
+            android:layout_width="160.0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button1"
+            android:layout_margin="30px" />
+        <Button
+            android:text="Lower Body"
+            android:layout_width="160.0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button2"
+            android:layout_margin="30px" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="120.0dp"
+        android:id="@+id/linearLayout2"
+        android:gravity="center">
+        <Button
+            android:text="Feet"
+            android:layout_width="160.0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button3"
+            android:layout_margin="30px" />
+        <Button
+            android:text="Accessories"
+            android:layout_width="160.0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button4"
+            android:layout_margin="30px" />
+    </LinearLayout>
+    <Button
+        android:text="Back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button5"
+        android:layout_margin="30px"
+        android:layout_gravity="center" />
 
 </LinearLayout>

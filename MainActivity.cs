@@ -39,7 +39,8 @@ namespace IT123P___MP
             username = edit1.Text;
             password = edit2.Text;
 
-            request = (HttpWebRequest)WebRequest.Create($"http://192.168.100.63/REST/IT123P/MP/API/user_login.php?uname={username}&pword={password}");
+            string local_ip = UtilityClass.ip;
+            request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/user_login.php?uname={username}&pword={password}");
             response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());
             res = reader.ReadToEnd();
@@ -53,6 +54,7 @@ namespace IT123P___MP
                 Finish();
             }
         }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

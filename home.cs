@@ -73,12 +73,15 @@ namespace IT123P___MP
 
         public void ViewOutfit(object sender, EventArgs e)
         {
-
+            Intent i = new Intent(this, typeof(viewOutfit));
+            i.PutExtra("name", name);
+            StartActivity(i);
         }
         
         public void ViewClothing(object sender, EventArgs e)
         {
-
+            Intent i = new Intent(this, typeof(viewClothing));
+            StartActivity(i);
         }
 
         public void CreateOutfit(object sender, EventArgs e)

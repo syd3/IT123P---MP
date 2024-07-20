@@ -32,24 +32,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/clothes_container"
-            android:layoutDirection="ltr"
-            >
-            <ImageButton
-                android:src="@android:drawable/ic_input_delete"
-                android:layout_width="192dp"
-                android:layout_height="120dp"
-                android:id="@+id/remove_btn"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true" />
+            android:layoutDirection="ltr">
         </com.google.android.material.internal.FlowLayout>
     </ScrollView>
     
-    
-    
-    <Button
-        android:text="Back"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button1"
-        android:layout_margin="30px" />
+        android:layout_height="71.0dp"
+        android:id="@+id/linearLayout1" >
+        <Button
+            android:text="Back"
+            android:layout_width="172dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button1"
+            android:layout_margin="20px" />
+        <Button
+            android:text="Remove"
+            android:layout_width="172dp"
+            android:layout_height="match_parent"
+            android:id="@+id/remove_btn"
+            android:layout_margin="20px" />
+    </LinearLayout>
 </LinearLayout>
