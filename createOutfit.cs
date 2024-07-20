@@ -3,7 +3,10 @@ using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Provider;
+using Android.Runtime;
 using Android.Widget;
+using Java.Interop;
 using System;
 
 namespace IT123P___MP
@@ -16,8 +19,7 @@ namespace IT123P___MP
         public string upperImg, lowerImg, feetImg, acc1Img, acc2Img, acc3Img;
         int requestCode;
         string type;
-
-        protected override void OnCreate(Bundle savedInstanceState)
+protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.create_outfit);

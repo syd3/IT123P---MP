@@ -73,7 +73,8 @@ namespace IT123P___MP
 
         public void ViewOutfit(object sender, EventArgs e)
         {
-
+            Intent i = new Intent(this, typeof(ViewOutfit));
+            StartActivity(i);
         }
         
         public void ViewClothing(object sender, EventArgs e)
@@ -90,7 +91,8 @@ namespace IT123P___MP
 
         public void NewClothes(object sender, EventArgs e)
         {
-
+            Intent i = new Intent(this, typeof(New_Clothes));
+            StartActivity(i);
         }
     }
 }
