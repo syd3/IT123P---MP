@@ -3,16 +3,16 @@ using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Views;
 using Android.Widget;
 using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text.Json;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "createOutfit")]
+    [Activity(Label = "createOutfit", Theme = "@style/Theme.Design")]
     public class createOutfit : Activity
     {
         ImageButton upper, lower, feet, acc1, acc2, acc3;
@@ -70,7 +70,6 @@ namespace IT123P___MP
                 {
                     string fileName = data.GetStringExtra("fileName");
 
-                    // Retrieves an image from a URL
                     Android.Graphics.Bitmap imgBm = (Android.Graphics.Bitmap)null;
                     if (fileName.Length == 0)
                     {
@@ -78,38 +77,42 @@ namespace IT123P___MP
                     }
                     else
                     {
-                        string local_ip = UtilityClass.ip;
-                        imgBm = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{fileName}.jpg");
+                        imgBm = FormatImage(fileName);
                     }
 
-                    // Code below can probably be improved more, if possible find way to loop it instead
                     if (this.type == "upper")
                     {
+                        upper.SetScaleType(ImageButton.ScaleType.CenterCrop);
                         upper.SetImageBitmap(imgBm);
                         upperImg = fileName;
                     }
                     else if (this.type == "lower")
                     {
+                        lower.SetScaleType(ImageButton.ScaleType.CenterCrop);
                         lower.SetImageBitmap(imgBm);
                         lowerImg = fileName;
                     }
                     else if (this.type == "feet")
                     {
+                        feet.SetScaleType(ImageButton.ScaleType.CenterCrop);
                         feet.SetImageBitmap(imgBm);
                         feetImg = fileName;
                     }
                     else if (this.type == "acc1")
                     {
+                        acc1.SetScaleType(ImageButton.ScaleType.CenterCrop);
                         acc1.SetImageBitmap(imgBm);
                         acc1Img = fileName;
                     }
                     else if (this.type == "acc2")
                     {
+                        acc2.SetScaleType(ImageButton.ScaleType.CenterCrop);
                         acc2.SetImageBitmap(imgBm);
                         acc2Img = fileName;
                     }
                     else if (this.type == "acc3")
                     {
+                        acc3.SetScaleType(ImageButton.ScaleType.CenterCrop);
                         acc3.SetImageBitmap(imgBm);
                         acc3Img = fileName;
                     }
@@ -123,8 +126,6 @@ namespace IT123P___MP
             int type = imbutton.Id;
             string outfitType = "";
 
-            // Code below can probably be improved more, if possible find way to loop it instead
-            // Converts the int of a widget object into its respective string value
             if (type == Resource.Id.upper_button)
             {
                 outfitType = "upper";
@@ -157,7 +158,7 @@ namespace IT123P___MP
             StartActivityForResult(i, requestCode);
         }
 
-        public void RandomOutfit(object sender, EventArgs e) // Crashes when used for a second time? Or maybe a problem with your phone
+        public void RandomOutfit(object sender, EventArgs e)
         {
             upperImg = FetchOutfit("upper").ToString();
             lowerImg = FetchOutfit("lower").ToString();
@@ -166,25 +167,23 @@ namespace IT123P___MP
             acc2Img = FetchOutfit("acc2").ToString();
             acc3Img = FetchOutfit("acc3").ToString();
 
-            Bitmap up  = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{upperImg}.jpg");
-            Bitmap low = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{lowerImg}.jpg");
-            Bitmap ft = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{feetImg}.jpg");
-            Bitmap ac1 = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc1Img}.jpg");
-            Bitmap ac2 = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc2Img}.jpg");
-            Bitmap ac3 = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc3Img}.jpg");
-            upper.SetImageBitmap(up);
-            lower.SetImageBitmap(low);
-            feet.SetImageBitmap(ft);
-            acc1.SetImageBitmap(ac1);
-            acc2.SetImageBitmap(ac2);
-            acc3.SetImageBitmap(ac3);
+            upper.SetScaleType(ImageButton.ScaleType.CenterCrop);
+            upper.SetImageBitmap(FormatImage(upperImg));
 
-            up.Dispose();
-            low.Dispose();
-            ft.Dispose();
-            ac1.Dispose();
-            ac2.Dispose();
-            ac3.Dispose();
+            lower.SetScaleType(ImageButton.ScaleType.CenterCrop);
+            lower.SetImageBitmap(FormatImage(lowerImg));
+
+            feet.SetScaleType(ImageButton.ScaleType.CenterCrop);
+            feet.SetImageBitmap(FormatImage(feetImg));
+
+            acc1.SetScaleType(ImageButton.ScaleType.CenterCrop);
+            acc1.SetImageBitmap(FormatImage(acc1Img));
+
+            acc2.SetScaleType(ImageButton.ScaleType.CenterCrop);
+            acc2.SetImageBitmap(FormatImage(acc2Img));
+
+            acc3.SetScaleType(ImageButton.ScaleType.CenterCrop);
+            acc3.SetImageBitmap(FormatImage(acc3Img));
         }
 
         public string FetchOutfit(string outfitName)
@@ -216,10 +215,9 @@ namespace IT123P___MP
         {
             name = Intent.GetStringExtra("name");
 
-            // Ensure first that the required fields such as upper, lower, and feet have values before proceeding
             if (upperImg == null || lowerImg == null || feetImg == null)
             {
-                Toast.MakeText(this, "Please fill out Upper, Lower, and Feet categories.",ToastLength.Short).Show();
+                Toast.MakeText(this, "Please fill out the Upper, Lower, and Feet fields",ToastLength.Short).Show();
             }
             else
             {
@@ -235,6 +233,47 @@ namespace IT123P___MP
                 i.SetFlags(ActivityFlags.ReorderToFront);
                 StartActivity(i);
             }
+        }
+
+        public Bitmap FormatImage(string img)
+        {
+            Android.Graphics.Bitmap bitmap;
+
+            var imageBitmap = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{img}.jpg");
+
+            if (imageBitmap == null)
+            {
+                bitmap = BitmapFactory.DecodeResource(this.Resources, Android.Resource.Drawable.IcMenuGallery);
+            }
+            else
+            {
+                Display d = this.WindowManager.DefaultDisplay;
+                Android.Util.DisplayMetrics m = new Android.Util.DisplayMetrics();
+                d.GetMetrics(m);
+
+                int w = (int)((m.WidthPixels - 8) / 2);
+                int h = (int)(120 * m.Density);
+                float ratio = (float)h / w;
+                int originalw = imageBitmap.Width;
+                int originalh = imageBitmap.Height;
+                float imageratio = (float)originalh / (float)originalw;
+                bitmap = imageBitmap;
+                if (imageratio > ratio)
+                {
+                    int newh = (int)((float)w / (float)imageBitmap.Width * imageBitmap.Height);
+                    int y = Math.Max(0, (newh - h) / 2);
+                    imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, w, newh, true);
+                    bitmap = Android.Graphics.Bitmap.CreateBitmap(imageBitmap, 0, y, w, h);
+                }
+                else
+                {
+                    int neww = (int)((float)h / (float)originalh * originalw);
+                    int x = Math.Max(0, (neww - w) / 2);
+                    imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, neww, h, true);
+                    bitmap = Android.Graphics.Bitmap.CreateBitmap(imageBitmap, x, 0, w, h);
+                }
+            }
+            return bitmap;
         }
     }
 }

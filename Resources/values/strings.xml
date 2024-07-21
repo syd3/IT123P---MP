@@ -5,9 +5,9 @@
 		<item>Upper</item>
 		<item>Lower</item>
 		<item>Feet</item>
-		<item>Accessory(1)</item>
-		<item>Accessory(2)</item>
-		<item>Accessory(3)</item>
+		<item>Acc1</item>
+		<item>Acc2</item>
+		<item>Acc3</item>
 	</string-array>
 	<string-array name="occ_drop">
 		<item>Casual</item>

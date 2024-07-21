@@ -36,17 +36,19 @@
                 <Button
                     android:text="Import"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:id="@+id/import_btn"
                     android:layout_weight="2"
-                    android:layout_margin="30px" />
+                    android:layout_margin="30px"
+                    android:background="#8C52FF" />
                 <Button
                     android:text="Cancel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="2"
                     android:id="@+id/back_btn"
-                    android:layout_margin="30px"/>
+                    android:layout_margin="30px"
+                    android:background="#8C52FF" />
             </LinearLayout>
             <EditText
                 android:layout_width="match_parent"
@@ -65,17 +67,12 @@
                 />
             <Button
                 android:text="Upload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
                 android:id="@+id/upload_btn"
-                android:layout_margin="30px" />
-            <TextView
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/debug_text" />
-            
+                android:layout_margin="30px"
+                android:background="#8C52FF"
+                android:layout_gravity="center" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

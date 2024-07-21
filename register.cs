@@ -1,19 +1,14 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net;
 using System.IO;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "register")]
+    [Activity(Label = "register", Theme = "@style/Theme.Design")]
     public class register : Activity
     {
         EditText edit1, edit2, edit3;
@@ -55,12 +50,17 @@ namespace IT123P___MP
             password = edit2.Text;
             confPassword = edit3.Text;
 
-            if (password != confPassword)
+            if (username == "" || password == "" || confPassword == "")
             {
-                Toast.MakeText(this, "Passwords don't match", ToastLength.Long).Show();
+                Toast.MakeText(this, "Please fill out all the fields", ToastLength.Short).Show();
+            }
+            else if (password != confPassword)
+            {
+                Toast.MakeText(this, "Passwords don't match", ToastLength.Short).Show();
                 edit2.Text = "";
                 edit3.Text = "";
-            } else
+            }
+            else
             {
                 string local_ip = UtilityClass.ip;
                 request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/user_register.php?uname={username}&pword={password}");

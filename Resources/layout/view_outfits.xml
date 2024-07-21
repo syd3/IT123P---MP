@@ -28,9 +28,11 @@
     </ScrollView>
     <Button
         android:text="Back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
         android:id="@+id/button5"
-        android:layout_margin="30px" />
+        android:layout_margin="30px"
+        android:background="#8C52FF" 
+        android:layout_gravity="center"/>
 
 </LinearLayout>

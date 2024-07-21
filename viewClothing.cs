@@ -5,7 +5,7 @@ using Android.Widget;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "viewClothing")]
+    [Activity(Label = "viewClothing", Theme = "@style/Theme.Design")]
     public class viewClothing : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

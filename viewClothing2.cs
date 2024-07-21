@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "viewClothing2")]
+    [Activity(Label = "viewClothing2", Theme = "@style/Theme.Design")]
     public class viewClothing2 : Activity
     {
         TextView clothingType;

@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "viewOutfit")]
+    [Activity(Label = "viewOutfit", Theme = "@style/Theme.Design")]
     public class viewOutfit : Activity
     {
         Button back;

@@ -27,7 +27,7 @@ using System.Text.Json;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "New_Clothes")]
+    [Activity(Label = "New_Clothes", Theme = "@style/Theme.Design")]
     public class New_Clothes : Activity
     {
         Button back_btn;
@@ -53,11 +53,13 @@ namespace IT123P___MP
             typeField = FindViewById<Spinner>(Resource.Id.type_spin);
             Button import = FindViewById<Button>(Resource.Id.import_btn);
             Button upload = FindViewById<Button>(Resource.Id.upload_btn);
+            
             import.Click += delegate
             {
                 Intent i = new Android.Content.Intent(Intent.ActionPick, Android.Provider.MediaStore.Images.Media.ExternalContentUri);
                 StartActivityForResult(i, requestCode);
             };
+            
             upload.Click += delegate
             {
                 if (bmp == null)
@@ -67,6 +69,7 @@ namespace IT123P___MP
                     Submit();
                 }
             };
+            
             FindViewById<Button>(Resource.Id.back_btn).Click += delegate
             {
                 Intent i = new Intent(this, typeof(home));
@@ -82,7 +85,36 @@ namespace IT123P___MP
             {
                 imageUri = data.Data;
                 bmp = GetBitmap(this.ContentResolver, imageUri);
-                iv.SetImageBitmap(bmp);
+
+                Display d = this.WindowManager.DefaultDisplay;
+                Android.Util.DisplayMetrics m = new Android.Util.DisplayMetrics();
+                d.GetMetrics(m);
+
+                int w = (int)((m.WidthPixels - 8) / 2);
+                int h = (int)(120 * m.Density);
+                float ratio = (float)h / w;
+                int originalw = bmp.Width;
+                int originalh = bmp.Height;
+                float imageratio = (float)originalh / (float)originalw;
+                Android.Graphics.Bitmap bitmap = bmp;
+                if (imageratio > ratio)
+                {
+                    int newh = (int)((float)w / (float)bmp.Width * bmp.Height);
+                    int y = Math.Max(0, (newh - h) / 2);
+                    bmp = Android.Graphics.Bitmap.CreateScaledBitmap(bmp, w, newh, true);
+                    bitmap = Android.Graphics.Bitmap.CreateBitmap(bmp, 0, y, w, h);
+                }
+                else
+                {
+                    int neww = (int)((float)h / (float)originalh * originalw);
+                    int x = Math.Max(0, (neww - w) / 2);
+                    bmp = Android.Graphics.Bitmap.CreateScaledBitmap(bmp, neww, h, true);
+                    bitmap = Android.Graphics.Bitmap.CreateBitmap(bmp, x, 0, w, h);
+                }
+
+                iv.SetScaleType(ImageView.ScaleType.CenterCrop);
+                iv.SetImageBitmap(bitmap);
+                
                 using (MemoryStream stream = new MemoryStream())
                 {
                     bmp.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
@@ -137,7 +169,6 @@ namespace IT123P___MP
                     using (StreamReader reader = new StreamReader(responseStream))
                     {
                         string responseFromServer = reader.ReadToEnd();
-                        FindViewById<TextView>(Resource.Id.debug_text).Text = responseFromServer;
                     }
                 }
             }
@@ -156,7 +187,14 @@ namespace IT123P___MP
             SaveImage();
 
             request = (HttpWebRequest)WebRequest.Create($"http://{UtilityClass.ip}/REST/IT123P/MP/API/change_name.php?name={fileName}&type={type}");
-            response = (HttpWebResponse)request.GetResponse(); // Web Request to retrieve the file name of the images
+            response = (HttpWebResponse)request.GetResponse();
+
+            Toast.MakeText(this, "New Clothes Added", ToastLength.Long).Show();
+
+            Intent i = new Intent(this, typeof(home));
+            i.SetFlags(ActivityFlags.ReorderToFront);
+            StartActivity(i);
+            Finish();
         }
     }
 }

@@ -2,31 +2,13 @@
 using Android.Content;
 using Android.OS;
 using Android.Widget;
-using Java.Lang;
 using System;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "home")]
+    [Activity(Label = "home", Theme = "@style/Theme.Design")]
     public class home : Activity
     {
-        // Layout needs to be fixed
-        // Currently the layout is janky, widget sizes need to be adjusted
-
-        // Need to find a better and more optimized way to transfer data between Activities
-        // Need to optimize the structure of the database
-        // Need more error handling in the API?
-        
-        // Since the foundation for displaying images has already been set up as well as the database
-        // Creating ViewOutfit and ViewClothing should be easy
-        // General idea is to just retrieve the values from the database and display it
-        // Menu for both methods should loop through how many data is available
-        // ^ Similar code can be found in the createOutfitSelection activity
-
-        // Missing:
-        // No ViewClothing layout yet
-        // Validation to ensure proper inputs and required fields have values
-
         Button viewOutfit, viewClothing, createOutfit, newClothes, logOut;
         TextView txt;
         public string name;
@@ -61,12 +43,12 @@ namespace IT123P___MP
             StartActivity(i);
             Finish(); // Ensures that this current activity will not be running in the background afterwards
         }
+        
         public void LogOut_Click(object sender, EventArgs e)
         {
             LogOut();
         }
-        // this method is implemented to go back to the previous login page which has been finished
-        // the logout function starts a new login page
+        
         public override void OnBackPressed()
         {
             LogOut();

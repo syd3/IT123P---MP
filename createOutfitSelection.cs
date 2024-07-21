@@ -14,7 +14,7 @@ using System;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "createOutfitSelection")]
+    [Activity(Label = "createOutfitSelection", Theme = "@style/Theme.Design")]
     public class createOutfitSelection : Activity
     {
         Button back, remove;

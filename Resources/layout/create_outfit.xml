@@ -187,22 +187,25 @@
         android:id="@+id/linearLayout10">
         <Button
             android:text="Random"
-            android:layout_width="187.0dp"
-            android:layout_height="match_parent"
+            android:layout_width="180.0dp"
+            android:layout_height="37dp"
             android:id="@+id/button1"
-            android:layout_margin="5px" />
+            android:layout_margin="12px"
+            android:background="#8C52FF" />
         <Button
             android:text="Next"
-            android:layout_width="187.0dp"
-            android:layout_height="match_parent"
+            android:layout_width="180.0dp"
+            android:layout_height="37dp"
             android:id="@+id/button2"
-            android:layout_margin="5px" />
+            android:layout_margin="12px"
+            android:background="#8C52FF" />
     </LinearLayout>
     <Button
         android:text="Back"
-        android:layout_width="337.0dp"
-        android:layout_height="43dp"
+        android:layout_width="340.0dp"
+        android:layout_height="35dp"
         android:id="@+id/button3"
-        android:layout_margin="5px"
-        android:layout_gravity="center"  />
+        android:layout_margin="10px"
+        android:layout_gravity="center"
+        android:background="#8C52FF" />
 </LinearLayout>

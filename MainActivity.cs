@@ -13,13 +13,6 @@ namespace IT123P___MP
     [Activity(Label = "@string/app_name", Theme = "@style/Theme.Design", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        //To do
-        //- Change widgets to respective colors
-        //- Clean code, dispose of any unused variables
-        //- Fix janky layout, make it adaptable to screen size
-        //- Add validation for inputs and error handling
-        //- Test functions for errors
-
         EditText edit1, edit2;
         Button btn, btn2;
         ImageView logo;
@@ -58,19 +51,25 @@ namespace IT123P___MP
             username = edit1.Text;
             password = edit2.Text;
 
-            string local_ip = UtilityClass.ip;
-            request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/user_login.php?uname={username}&pword={password}");
-            response = (HttpWebResponse)request.GetResponse();
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-            res = reader.ReadToEnd();
-            Toast.MakeText(this, res, ToastLength.Long).Show();
-
-            if (res.Contains("Ok!"))
+            if (username == "" || password == "")
             {
-                Intent i = new Intent(this, typeof(home));
-                i.PutExtra("name", username);
-                StartActivity(i);
-                Finish();
+                Toast.MakeText(this, "Please fill out the Username and Password fields", ToastLength.Short).Show();
+            } else
+            {
+                string local_ip = UtilityClass.ip;
+                request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/user_login.php?uname={username}&pword={password}");
+                response = (HttpWebResponse)request.GetResponse();
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                res = reader.ReadToEnd();
+                Toast.MakeText(this, res, ToastLength.Long).Show();
+
+                if (res.Contains("Logged In"))
+                {
+                    Intent i = new Intent(this, typeof(home));
+                    i.PutExtra("name", username);
+                    StartActivity(i);
+                    Finish();
+                }
             }
         }
 

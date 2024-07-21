@@ -8,7 +8,7 @@ using System.Net;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "createOutfit2")]
+    [Activity(Label = "createOutfit2", Theme = "@style/Theme.Design")]
     public class createOutfit2 : Activity
     {
         EditText outfitName, desc;
@@ -25,8 +25,7 @@ namespace IT123P___MP
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.create_outfit_2);
 
-            // Add validation to determine if the required fields have values
-            outfitName = FindViewById<EditText>(Resource.Id.editText1); // Required
+            outfitName = FindViewById<EditText>(Resource.Id.editText1);
             occasion = FindViewById<Spinner>(Resource.Id.occ_spin);
             desc = FindViewById<EditText>(Resource.Id.editText3);
             back = FindViewById<Button>(Resource.Id.button1);
@@ -46,32 +45,38 @@ namespace IT123P___MP
             {
                 Intent i = new Intent(this, typeof(createOutfit));
                 i.SetFlags(ActivityFlags.ReorderToFront);
-                Finish();
+                StartActivity(i);
             };
         }
 
         public void SaveOutfit(object sender, EventArgs e)
         {
-            // Find a better way to call the API
-            string local_ip = UtilityClass.ip;
-            string url = $"http://{local_ip}/REST/IT123P/MP/API/save_outfit.php?user={name}&name={outfitName.Text}&occ={occasion.SelectedItem.ToString()}&desc={desc.Text}&upper={upperImg}&lower={lowerImg}&feet={feetImg}&acc1={acc1Img}&acc2={acc2Img}&acc3={acc3Img}";
-            request = (HttpWebRequest)WebRequest.Create(url);
-            response = (HttpWebResponse)request.GetResponse();
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-            res = reader.ReadToEnd();
-
-            if (res.Contains("Ok!"))
+            if (outfitName.Text == "")
             {
-                Toast.MakeText(this, "Outfit Saved", ToastLength.Long).Show();
-                Intent i = new Intent(this, typeof(home));
-                i.SetFlags(ActivityFlags.ReorderToFront);
-                i.SetFlags(ActivityFlags.ClearTop);
-                i.PutExtra("name",name);
-                StartActivity(i);
-                Finish();
+                Toast.MakeText(this, "Please fill out the outfit name field", ToastLength.Short).Show();
             } else
             {
-                Toast.MakeText(this, "Failed to create outfit", ToastLength.Long).Show();
+                string local_ip = UtilityClass.ip;
+                string url = $"http://{local_ip}/REST/IT123P/MP/API/save_outfit.php?user={name}&name={outfitName.Text}&occ={occasion.SelectedItem.ToString()}&desc={desc.Text}&upper={upperImg}&lower={lowerImg}&feet={feetImg}&acc1={acc1Img}&acc2={acc2Img}&acc3={acc3Img}";
+                request = (HttpWebRequest)WebRequest.Create(url);
+                response = (HttpWebResponse)request.GetResponse();
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                res = reader.ReadToEnd();
+
+                if (res.Contains("Outfit Created"))
+                {
+                    Toast.MakeText(this, "Outfit Saved", ToastLength.Long).Show();
+                    Intent i = new Intent(this, typeof(home));
+                    i.SetFlags(ActivityFlags.ReorderToFront);
+                    i.SetFlags(ActivityFlags.ClearTop);
+                    i.PutExtra("name", name);
+                    StartActivity(i);
+                    Finish();
+                }
+                else
+                {
+                    Toast.MakeText(this, "Failed to create outfit", ToastLength.Short).Show();
+                }
             }
         }
     }
