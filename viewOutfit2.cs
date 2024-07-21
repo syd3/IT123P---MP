@@ -60,6 +60,11 @@ namespace IT123P___MP
                 request.Abort();
                 request = null;
                 response = null;
+
+                Intent i = new Intent(this, typeof(home));
+                i.SetFlags(ActivityFlags.ReorderToFront);
+                StartActivity(i);
+                Finish();
             };
 
             string local_ip = UtilityClass.ip;

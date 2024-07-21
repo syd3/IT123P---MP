@@ -52,11 +52,12 @@ namespace IT123P___MP
             newClothes.Click += this.NewClothes;
 
             logOut.Click += LogOut_Click;
+
         }
         public void LogOut()
         {
             Intent i = new Intent(this, typeof(MainActivity));
-            // i.SetFlags(ActivityFlags.ReorderToFront); // Returns to the previous activity in the foreground
+            i.SetFlags(ActivityFlags.ClearTop);
             StartActivity(i);
             Finish(); // Ensures that this current activity will not be running in the background afterwards
         }

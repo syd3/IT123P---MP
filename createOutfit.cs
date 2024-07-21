@@ -18,6 +18,7 @@ namespace IT123P___MP
         ImageButton upper, lower, feet, acc1, acc2, acc3;
         Button random, next, back;
         public string upperImg, lowerImg, feetImg, acc1Img, acc2Img, acc3Img;
+        string name;
         int requestCode;
         string type, res;
         string local_ip = UtilityClass.ip;
@@ -213,7 +214,7 @@ namespace IT123P___MP
 
         public void CreateOutfitFinal(object sender, EventArgs e)
         {
-            string name = Intent.GetStringExtra("name");
+            name = Intent.GetStringExtra("name");
 
             // Ensure first that the required fields such as upper, lower, and feet have values before proceeding
             if (upperImg == null || lowerImg == null || feetImg == null)
@@ -230,6 +231,7 @@ namespace IT123P___MP
                 i.PutExtra("acc1Img", acc1Img);
                 i.PutExtra("acc2Img", acc2Img);
                 i.PutExtra("acc3Img", acc3Img);
+                i.PutExtra("name", name);
                 i.SetFlags(ActivityFlags.ReorderToFront);
                 StartActivity(i);
             }
