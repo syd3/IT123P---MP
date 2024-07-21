@@ -165,23 +165,45 @@ namespace IT123P___MP
             acc2Img = FetchOutfit("acc2").ToString();
             acc3Img = FetchOutfit("acc3").ToString();
 
-            upper.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{upperImg}.jpg"));
-            lower.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{lowerImg}.jpg"));
-            feet.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{feetImg}.jpg"));
-            acc1.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc1Img}.jpg"));
-            acc2.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc2Img}.jpg"));
-            acc3.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc3Img}.jpg"));
+            Bitmap up  = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{upperImg}.jpg");
+            Bitmap low = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{lowerImg}.jpg");
+            Bitmap ft = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{feetImg}.jpg");
+            Bitmap ac1 = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc1Img}.jpg");
+            Bitmap ac2 = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc2Img}.jpg");
+            Bitmap ac3 = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc3Img}.jpg");
+            upper.SetImageBitmap(up);
+            lower.SetImageBitmap(low);
+            feet.SetImageBitmap(ft);
+            acc1.SetImageBitmap(ac1);
+            acc2.SetImageBitmap(ac2);
+            acc3.SetImageBitmap(ac3);
+
+            up.Dispose();
+            low.Dispose();
+            ft.Dispose();
+            ac1.Dispose();
+            ac2.Dispose();
+            ac3.Dispose();
         }
 
         public string FetchOutfit(string outfitName)
         {
             request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/fetch_clothes.php?type={outfitName}");
             response = (HttpWebResponse)request.GetResponse();
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-            res = reader.ReadToEnd();
-            using JsonDocument doc = JsonDocument.Parse(res);
-            JsonElement root = doc.RootElement;
-            JsonElement element = root.Clone();
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            { res = reader.ReadToEnd(); }
+            JsonElement root;
+            JsonElement element;
+            using (JsonDocument doc = JsonDocument.Parse(res))
+            {
+                root = doc.RootElement;
+                element = root.Clone();
+            }
+
+            response.Dispose();
+            response.Close();
+            request.Abort();
+            request = null;
 
             Random rnd = new Random();
             int randomClothe = rnd.Next(0, element.GetArrayLength());
