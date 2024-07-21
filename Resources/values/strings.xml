@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">IT123P___MP</string>
     <string name="action_settings">Settings</string>
+	<string-array name="type_drop">
+		<item>Upper</item>
+		<item>Lower</item>
+		<item>Feet</item>
+		<item>Accessory(1)</item>
+		<item>Accessory(2)</item>
+		<item>Accessory(3)</item>
+	</string-array>
+	<string-array name="occ_drop">
+		<item>Casual</item>
+		<item>Semi</item>
+		<item>Formal</item>
+	</string-array>
 </resources>

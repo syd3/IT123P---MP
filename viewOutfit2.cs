@@ -45,6 +45,7 @@ namespace IT123P___MP
                 Intent i = new Intent(this, typeof(viewOutfit));
                 i.SetFlags(ActivityFlags.ReorderToFront);
                 StartActivity(i);
+                Finish();
             };
 
             string local_ip = UtilityClass.ip;

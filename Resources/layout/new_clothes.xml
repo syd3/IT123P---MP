@@ -25,26 +25,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView" />
-            <Button
-                android:text="Import"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/import_btn"
-                android:layout_margin="30px" />
+                android:id="@+id/linearLayout1"
+                android:weightSum="4">
+                <Button
+                    android:text="Import"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/import_btn"
+                    android:layout_weight="2"
+                    android:layout_margin="30px" />
+                <Button
+                    android:text="Cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:id="@+id/back_btn"
+                    android:layout_margin="30px"/>
+            </LinearLayout>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/name_edit"
                 android:hint="Name"
                 android:singleLine="true" />
-            <EditText
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/type_spin"
                 android:hint="Type"
-                android:singleLine="true" />
-            
-            
+                android:singleLine="true"
+                android:spinnerMode="dropdown"
+                android:entries="@array/type_drop"
+                />
             <Button
                 android:text="Upload"
                 android:layout_width="match_parent"

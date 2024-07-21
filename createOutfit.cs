@@ -158,19 +158,19 @@ namespace IT123P___MP
 
         public void RandomOutfit(object sender, EventArgs e) // Crashes when used for a second time? Or maybe a problem with your phone
         {
-            string upperRnd = FetchOutfit("upper").ToString();
-            string lowerRnd = FetchOutfit("lower").ToString();
-            string feetRnd = FetchOutfit("feet").ToString();
-            string acc1Rnd = FetchOutfit("acc1").ToString();
-            string acc2Rnd = FetchOutfit("acc2").ToString();
-            string acc3Rnd = FetchOutfit("acc3").ToString();
+            upperImg = FetchOutfit("upper").ToString();
+            lowerImg = FetchOutfit("lower").ToString();
+            feetImg = FetchOutfit("feet").ToString();
+            acc1Img = FetchOutfit("acc1").ToString();
+            acc2Img = FetchOutfit("acc2").ToString();
+            acc3Img = FetchOutfit("acc3").ToString();
 
-            upper.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{upperRnd}.jpg"));
-            lower.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{lowerRnd}.jpg"));
-            feet.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{feetRnd}.jpg"));
-            acc1.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc1Rnd}.jpg"));
-            acc2.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc2Rnd}.jpg"));
-            acc3.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc3Rnd}.jpg"));
+            upper.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{upperImg}.jpg"));
+            lower.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{lowerImg}.jpg"));
+            feet.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{feetImg}.jpg"));
+            acc1.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc1Img}.jpg"));
+            acc2.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc2Img}.jpg"));
+            acc3.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc3Img}.jpg"));
         }
 
         public string FetchOutfit(string outfitName)
@@ -194,7 +194,7 @@ namespace IT123P___MP
             string name = Intent.GetStringExtra("name");
 
             // Ensure first that the required fields such as upper, lower, and feet have values before proceeding
-            if (upperImg.Length == 0 || lowerImg.Length == 0 || feetImg.Length == 0)
+            if (upperImg == null || lowerImg == null || feetImg == null)
             {
                 Toast.MakeText(this, "Please fill out Upper, Lower, and Feet categories.",ToastLength.Short).Show();
             }

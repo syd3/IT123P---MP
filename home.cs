@@ -93,7 +93,8 @@ namespace IT123P___MP
 
         public void NewClothes(object sender, EventArgs e)
         {
-
+            Intent i = new Intent(this, typeof(New_Clothes));
+            StartActivity(i);
         }
     }
 }

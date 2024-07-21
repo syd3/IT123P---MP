@@ -23,12 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText1" />
-    <TextView
+    <Spinner
         android:text="Occasion:"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3" />
+        android:spinnerMode="dropdown"
+        android:entries="@array/occ_drop"
+        android:id="@+id/occ_spin" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

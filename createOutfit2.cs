@@ -11,7 +11,8 @@ namespace IT123P___MP
     [Activity(Label = "createOutfit2")]
     public class createOutfit2 : Activity
     {
-        EditText outfitName, occasion, desc;
+        EditText outfitName, desc;
+        Spinner occasion;
         Button back, create;
         string upperImg, lowerImg, feetImg, acc1Img, acc2Img, acc3Img;
         string name, res;
@@ -26,7 +27,7 @@ namespace IT123P___MP
 
             // Add validation to determine if the required fields have values
             outfitName = FindViewById<EditText>(Resource.Id.editText1); // Required
-            occasion = FindViewById<EditText>(Resource.Id.editText2);
+            occasion = FindViewById<Spinner>(Resource.Id.occ_spin);
             desc = FindViewById<EditText>(Resource.Id.editText3);
             back = FindViewById<Button>(Resource.Id.button1);
             create = FindViewById<Button>(Resource.Id.button2);
@@ -54,7 +55,7 @@ namespace IT123P___MP
         {
             // Find a better way to call the API
             string local_ip = UtilityClass.ip;
-            string url = $"http://{local_ip}/REST/IT123P/MP/API/save_outfit.php?user={name}&name={outfitName.Text}&occ={occasion.Text}&desc={desc.Text}&upper={upperImg}&lower={lowerImg}&feet={feetImg}&acc1={acc1Img}&acc2={acc2Img}&acc3={acc3Img}";
+            string url = $"http://{local_ip}/REST/IT123P/MP/API/save_outfit.php?user={name}&name={outfitName.Text}&occ={occasion.SelectedItem.ToString()}&desc={desc.Text}&upper={upperImg}&lower={lowerImg}&feet={feetImg}&acc1={acc1Img}&acc2={acc2Img}&acc3={acc3Img}";
             request = (HttpWebRequest)WebRequest.Create(url);
             response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());

@@ -41,7 +41,7 @@ namespace IT123P___MP
         Android.Net.Uri imageUri;
         String imageBytesString;
         EditText nameField;
-        EditText typeField;
+        Spinner typeField;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -50,7 +50,7 @@ namespace IT123P___MP
 
             iv = FindViewById<ImageView>(Resource.Id.imageView);
             nameField = FindViewById<EditText>(Resource.Id.name_edit);
-            typeField = FindViewById<EditText>(Resource.Id.type_spin);
+            typeField = FindViewById<Spinner>(Resource.Id.type_spin);
             Button import = FindViewById<Button>(Resource.Id.import_btn);
             Button upload = FindViewById<Button>(Resource.Id.upload_btn);
             import.Click += delegate
@@ -67,6 +67,13 @@ namespace IT123P___MP
                     Submit();
                 }
             };
+            FindViewById<Button>(Resource.Id.back_btn).Click += delegate
+            {
+                Intent i = new Intent(this, typeof(home));
+                i.SetFlags(ActivityFlags.ReorderToFront);
+                StartActivity(i);
+                Finish();
+            };
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
@@ -78,7 +85,7 @@ namespace IT123P___MP
                 iv.SetImageBitmap(bmp);
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    bmp.Compress(Bitmap.CompressFormat.Png, 100, stream);
+                    bmp.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
                     stream.Position = 0;
                     byte[] imageBytes = stream.ToArray();
                     imageBytesString = Convert.ToBase64String(imageBytes);
@@ -144,7 +151,7 @@ namespace IT123P___MP
             }
 
             String fileName = nameField.Text;
-            String type = typeField.Text;
+            String type = typeField.SelectedItem.ToString().ToLower() ;
 
             SaveImage();
 
