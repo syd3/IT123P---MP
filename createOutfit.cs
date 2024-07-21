@@ -5,6 +5,10 @@ using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Widget;
 using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text.Json;
 
 namespace IT123P___MP
 {
@@ -15,7 +19,11 @@ namespace IT123P___MP
         Button random, next, back;
         public string upperImg, lowerImg, feetImg, acc1Img, acc2Img, acc3Img;
         int requestCode;
-        string type;
+        string type, res;
+        string local_ip = UtilityClass.ip;
+
+        HttpWebRequest request;
+        HttpWebResponse response;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -148,10 +156,37 @@ namespace IT123P___MP
             StartActivityForResult(i, requestCode);
         }
 
-        public void RandomOutfit(object sender, EventArgs e)
+        public void RandomOutfit(object sender, EventArgs e) // Crashes when used for a second time? Or maybe a problem with your phone
         {
-            // Will be done later, use the Random class with a specified value range to generate the outfit
-            // Make this read how many clothes are available first before specifying a value range
+            string upperRnd = FetchOutfit("upper").ToString();
+            string lowerRnd = FetchOutfit("lower").ToString();
+            string feetRnd = FetchOutfit("feet").ToString();
+            string acc1Rnd = FetchOutfit("acc1").ToString();
+            string acc2Rnd = FetchOutfit("acc2").ToString();
+            string acc3Rnd = FetchOutfit("acc3").ToString();
+
+            upper.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{upperRnd}.jpg"));
+            lower.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{lowerRnd}.jpg"));
+            feet.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{feetRnd}.jpg"));
+            acc1.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc1Rnd}.jpg"));
+            acc2.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc2Rnd}.jpg"));
+            acc3.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{acc3Rnd}.jpg"));
+        }
+
+        public string FetchOutfit(string outfitName)
+        {
+            request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/fetch_clothes.php?type={outfitName}");
+            response = (HttpWebResponse)request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream());
+            res = reader.ReadToEnd();
+            using JsonDocument doc = JsonDocument.Parse(res);
+            JsonElement root = doc.RootElement;
+            JsonElement element = root.Clone();
+
+            Random rnd = new Random();
+            int randomClothe = rnd.Next(0, element.GetArrayLength());
+
+            return element[randomClothe].ToString();
         }
 
         public void CreateOutfitFinal(object sender, EventArgs e)

@@ -1,16 +1,11 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net;
 using System.IO;
 using System.Text.Json;
+using Android.Graphics;
 
 namespace IT123P___MP
 {
@@ -29,16 +24,6 @@ namespace IT123P___MP
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.view_outfits_2);
-
-            //var imgVw = new ImageView[]
-            //{
-            //    upperImg = FindViewById<ImageView>(Resource.Id.imageView1),
-            //    lowerImg = FindViewById<ImageView>(Resource.Id.imageView3),
-            //    feetImg = FindViewById<ImageView>(Resource.Id.imageView5),
-            //    acc1Img = FindViewById<ImageView>(Resource.Id.imageView2),
-            //    acc2Img = FindViewById<ImageView>(Resource.Id.imageView4),
-            //    acc3Img = FindViewById<ImageView>(Resource.Id.imageView6)
-            //};
 
             upperImg = FindViewById<ImageView>(Resource.Id.imageView1);
             lowerImg = FindViewById<ImageView>(Resource.Id.imageView3);
@@ -77,18 +62,33 @@ namespace IT123P___MP
             upperImg.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[3]}.jpg"));
             lowerImg.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[4]}.jpg"));
             feetImg.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[5]}.jpg"));
-            //acc1Img.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[6]}.jpg"));
-            //acc2Img.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[7]}.jpg"));
-            //acc3Img.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[8]}.jpg"));
 
-            //for (int i = 3; i <= 8; i++)
-            //{
-            //    if (root[i].ToString() != "")
-            //    {
-            //        var imgView = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[i]}.jpg");
-            //        imgVw[i - 2].SetImageBitmap(imgView);
-            //    }
-            //}
+            if (UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[6]}.jpg") != null)
+            {
+                acc1Img.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[6]}.jpg"));
+            }
+            else
+            {
+                acc1Img.SetImageBitmap(BitmapFactory.DecodeResource(this.Resources, Android.Resource.Drawable.IcMenuGallery));
+            }
+
+            if (UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[7]}.jpg") != null)
+            {
+                acc2Img.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[7]}.jpg"));
+            }
+            else
+            {
+                acc2Img.SetImageBitmap(BitmapFactory.DecodeResource(this.Resources, Android.Resource.Drawable.IcMenuGallery));
+            }
+
+            if (UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[8]}.jpg") != null)
+            {
+                acc3Img.SetImageBitmap(UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[8]}.jpg"));
+            }
+            else
+            {
+                acc3Img.SetImageBitmap(BitmapFactory.DecodeResource(this.Resources, Android.Resource.Drawable.IcMenuGallery));
+            }
         }
     }
 }

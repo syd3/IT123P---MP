@@ -17,8 +17,8 @@ namespace IT123P___MP
     [Activity(Label = "createOutfitSelection")]
     public class createOutfitSelection : Activity
     {
-        ImageButton imb1, imb2, imb3, imb4, imb5;
-        Button back;
+        Button back, remove;
+        TextView clotheType;
         string res;
 
         HttpWebRequest request;
@@ -30,18 +30,28 @@ namespace IT123P___MP
             SetContentView(Resource.Layout.create_outfit_selection);
 
             back = FindViewById<Button>(Resource.Id.button1);
+            remove = FindViewById<Button>(Resource.Id.remove_btn);
+            clotheType = FindViewById<TextView>(Resource.Id.textView2);
             FlowLayout container = (FlowLayout)FindViewById<View>(Resource.Id.clothes_container);
 
             string local_ip = UtilityClass.ip;
             string type = Intent.GetStringExtra("type");
-            back.Click += delegate
+
+            if (type == "upper")
             {
-                Intent i = new Intent(this, typeof(createOutfit));
-                i.SetFlags(ActivityFlags.ReorderToFront);
-                StartActivity(i);
-                Finish();
-            };
-            FindViewById<Button>(Resource.Id.remove_btn).Click += delegate
+                clotheType.Text = "Upper Body";
+            } else if (type == "lower")
+            {
+                clotheType.Text = "Lower Body";
+            } else if (type == "feet")
+            {
+                clotheType.Text = "Feet";
+            } else if (type == "acc1" || type == "acc2" || type == "acc3")
+            {
+                clotheType.Text = "Accessories";
+            }
+            
+            remove.Click += delegate
             {
                 Intent t = new Intent(this, typeof(createOutfit));
                 t.PutExtra("fileName", String.Empty);
@@ -49,6 +59,14 @@ namespace IT123P___MP
                 t.SetFlags(ActivityFlags.ReorderToFront);
                 SetResult(Result.Ok, t); // Ensures that the appropriate data will be sent back
                 StartActivity(t);
+                Finish();
+            };
+
+            back.Click += delegate
+            {
+                Intent i = new Intent(this, typeof(createOutfit));
+                i.SetFlags(ActivityFlags.ReorderToFront);
+                StartActivity(i);
                 Finish();
             };
 
@@ -91,17 +109,19 @@ namespace IT123P___MP
                     imageBitmap = Android.Graphics.Bitmap.CreateScaledBitmap(imageBitmap, neww, h, true);
                     bitmap = Android.Graphics.Bitmap.CreateBitmap(imageBitmap, x, 0, w, h);
                 }
+                
                 ImageView child = (ImageView)LayoutInflater.Inflate(Resource.Layout.clothe_imgbtn, null);
+                
                 child.SetScaleType(ImageView.ScaleType.CenterCrop);
-
                 child.SetImageBitmap(bitmap);
+                
                 child.Click += delegate
                 {
                     Intent t = new Intent(this, typeof(createOutfit));
                     t.PutExtra("fileName", element.ToString());
                     t.PutExtra("type", type);
                     t.SetFlags(ActivityFlags.ReorderToFront);
-                    SetResult(Result.Ok, t); // Ensures that the appropriate data will be sent back
+                    SetResult(Result.Ok, t);
                     StartActivity(t);
                     Finish();
                 };

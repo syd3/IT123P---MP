@@ -14,13 +14,25 @@ namespace IT123P___MP
 
             using (var webClient = new WebClient())
             {
-                var imageBytes = webClient.DownloadData(url);
-                if (imageBytes != null && imageBytes.Length > 0)
+                try
                 {
-                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                    var imageBytes = webClient.DownloadData(url);
+                    if (imageBytes != null && imageBytes.Length > 0)
+                    {
+                        imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                    }
+                } catch (WebException ex)
+                {
+                    if (ex.Status == WebExceptionStatus.ProtocolError)
+                    {
+                        var httpResponse = ex.Response as HttpWebResponse;
+                        if (httpResponse != null && httpResponse.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            return null;
+                        }
+                    }
                 }
             }
-
             return imageBitmap;
         }
     }

@@ -1,14 +1,10 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Google.Android.Material.Internal;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net;
 using System.IO;
 using System.Text.Json;
@@ -33,6 +29,31 @@ namespace IT123P___MP
             clothingType = FindViewById<TextView>(Resource.Id.textView2);
             back = FindViewById<Button>(Resource.Id.button1);
 
+            string type = Intent.GetStringExtra("type");
+
+            if (type == "upper")
+            {
+                clothingType.Text = "Upper Body";
+                ShowClothing("upper");
+            }
+            else if (type == "lower")
+            {
+                clothingType.Text = "Lower Body";
+                ShowClothing("lower");
+            }
+            else if (type == "feet")
+            {
+                clothingType.Text = "Feet";
+                ShowClothing("feet");
+            }
+            else if (type == "acc")
+            {
+                clothingType.Text = "Accessories";
+                ShowClothing("acc1");
+                ShowClothing("acc2");
+                ShowClothing("acc3");
+            }
+
             back.Click += delegate
             {
                 Intent i = new Intent(this, typeof(viewClothing));
@@ -40,22 +61,6 @@ namespace IT123P___MP
                 StartActivity(i);
                 Finish();
             };
-
-            string type = Intent.GetStringExtra("type");
-            if (type == "upper")
-            {
-                ShowClothing("upper");
-            } else if (type == "lower")
-            {
-                ShowClothing("lower");
-            } else if (type == "feet")
-            {
-                ShowClothing("feet");
-            } else if (type == "acc")
-            {
-                // Include acc2 and acc3
-                ShowClothing("acc1");
-            }
         }
 
         public void ShowClothing(string clothing)
@@ -101,8 +106,10 @@ namespace IT123P___MP
                 }
 
                 ImageView child = (ImageView)LayoutInflater.Inflate(Resource.Layout.clothe_imgbtn, null);
+                
                 child.SetScaleType(ImageView.ScaleType.CenterCrop);
                 child.SetImageBitmap(bitmap);
+                
                 container.AddView(child);
             }
         }

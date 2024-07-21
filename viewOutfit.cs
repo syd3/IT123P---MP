@@ -1,16 +1,11 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Google.Android.Material.Internal;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.Json;
 
 namespace IT123P___MP
@@ -18,7 +13,7 @@ namespace IT123P___MP
     [Activity(Label = "viewOutfit")]
     public class viewOutfit : Activity
     {
-        Button outfitName1, outfitName2, outfitName3, outfitName4, back;
+        Button back;
         string res;
 
         HttpWebRequest request;
@@ -30,16 +25,10 @@ namespace IT123P___MP
             SetContentView(Resource.Layout.view_outfits);
 
             FlowLayout container = FindViewById<FlowLayout>(Resource.Id.clothes_container);
-
-            //var buttons = new Button[]
-            //{
-            //    outfitName1 = FindViewById<Button>(Resource.Id.button1),
-            //    outfitName2 = FindViewById<Button>(Resource.Id.button2),
-            //    outfitName3 = FindViewById<Button>(Resource.Id.button3),
-            //    outfitName4 = FindViewById<Button>(Resource.Id.button4)
-            //};
             
             back = FindViewById<Button>(Resource.Id.button5);
+
+            string name = Intent.GetStringExtra("name");
 
             back.Click += delegate
             {
@@ -48,8 +37,7 @@ namespace IT123P___MP
                 StartActivity(i);
                 Finish();
             };
-
-            string name = Intent.GetStringExtra("name");
+            
             string local_ip = UtilityClass.ip;
             request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/fetch_outfits.php?user={name}");
             response = (HttpWebResponse)request.GetResponse();
@@ -72,15 +60,6 @@ namespace IT123P___MP
                     i.PutExtra("name", name);
                     StartActivity(i);
                 };
-                
-                //buttons[i].Text = element.ToString();
-                //buttons[i].Click += delegate
-                //{
-                //    Intent i = new Intent(this, typeof(viewOutfit2));
-                //    i.PutExtra("outfitName", element.ToString());
-                //    i.PutExtra("name", name);
-                //    StartActivity(i);
-                //};
 
                 container.AddView(child);
             }
