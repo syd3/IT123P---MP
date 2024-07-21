@@ -10,11 +10,19 @@ using AndroidX.AppCompat.App;
 
 namespace IT123P___MP
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/Theme.Design", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
+        //To do
+        //- Change widgets to respective colors
+        //- Clean code, dispose of any unused variables
+        //- Fix janky layout, make it adaptable to screen size
+        //- Add validation for inputs and error handling
+        //- Test functions for errors
+
         EditText edit1, edit2;
-        Button btn;
+        Button btn, btn2;
+        ImageView logo;
         string username, password, res;
 
         HttpWebRequest request;
@@ -27,11 +35,22 @@ namespace IT123P___MP
             
             SetContentView(Resource.Layout.activity_main);
 
+            logo = FindViewById<ImageView>(Resource.Id.imageView1);
             edit1 = FindViewById<EditText>(Resource.Id.editText1);
             edit2 = FindViewById<EditText>(Resource.Id.editText2);
             btn = FindViewById<Button>(Resource.Id.button1);
+            btn2 = FindViewById<Button>(Resource.Id.button2);
+
+            logo.SetImageResource(Resource.Drawable.logo);
 
             btn.Click += this.Login;
+
+            btn2.Click += delegate
+            {
+                Intent i = new Intent(this, typeof(register));
+                StartActivity(i);
+                Finish();
+            };
         }
 
         public void Login(object sender, EventArgs e)

@@ -5,7 +5,7 @@ namespace IT123P___MP
 {
     public static class UtilityClass
     {
-        public static string ip = "192.168.100.63";
+        public static string ip = "192.168.1.14";
         
         // Call this method class via: var imgBp = UtilityClass.GetImageBitmapFromUrl(URL); imageButtonVarName = SetImageBitmap(imgBp);
         public static Bitmap GetImageBitmapFromUrl(string url) // To retrieve an image from a URL

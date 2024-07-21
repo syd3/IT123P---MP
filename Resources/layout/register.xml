@@ -49,13 +49,36 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/textView2"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical" 
             android:layout_margin="10px" />
         <EditText
             android:inputType="textPassword"
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:id="@+id/editText2"
+            android:layout_margin="10px"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+        <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:id="@+id/linearLayout5">
+        <TextView
+            android:text="Confirm Password:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="107.5dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView3"
+            android:gravity="center_vertical"
+            android:layout_margin="10px" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:id="@+id/editText3"
             android:layout_margin="10px"
             android:gravity="center_vertical" />
     </LinearLayout>
@@ -67,13 +90,13 @@
         android:layout_height="71dp"
         android:id="@+id/linearLayout2">
         <Button
-            android:text="Register"
+            android:text="Back"
             android:layout_width="172dp"
             android:layout_height="match_parent"
             android:id="@+id/button2"
-            android:layout_margin="20px"/>
+            android:layout_margin="20px" />
         <Button
-            android:text="Login"
+            android:text="Register"
             android:layout_width="172dp"
             android:layout_height="match_parent"
             android:id="@+id/button1"
