@@ -83,6 +83,8 @@ namespace IT123P___MP
                 JsonElement element = root[i].Clone(); // Needed so that the Json Object is still accessible after being disposed
 
                 var imageBitmap = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[i]}.jpg");
+                if (imageBitmap == null)
+                { continue; }
 
                 Display d = this.WindowManager.DefaultDisplay;
                 Android.Util.DisplayMetrics m = new Android.Util.DisplayMetrics();

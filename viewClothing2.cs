@@ -78,6 +78,8 @@ namespace IT123P___MP
             for (int i = 0; i < root.GetArrayLength(); i++)
             {
                 var imageBitmap = UtilityClass.GetImageBitmapFromUrl($"http://{local_ip}/REST/IT123P/MP/img/{root[i]}.jpg");
+                if (imageBitmap == null)
+                { continue; }
 
                 Display d = this.WindowManager.DefaultDisplay;
                 Android.Util.DisplayMetrics m = new Android.Util.DisplayMetrics();
