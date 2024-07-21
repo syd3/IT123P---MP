@@ -31,10 +31,6 @@
         android:spinnerMode="dropdown"
         android:entries="@array/occ_drop"
         android:id="@+id/occ_spin" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2" />
     <TextView
         android:text="Description:"
         android:textAppearance="?android:attr/textAppearanceMedium"

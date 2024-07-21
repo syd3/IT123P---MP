@@ -46,7 +46,6 @@ namespace IT123P___MP
             {
                 Intent i = new Intent(this, typeof(createOutfit));
                 i.SetFlags(ActivityFlags.ReorderToFront);
-                StartActivity(i);
                 Finish();
             };
         }
@@ -67,6 +66,7 @@ namespace IT123P___MP
                 Intent i = new Intent(this, typeof(home));
                 i.SetFlags(ActivityFlags.ReorderToFront);
                 i.SetFlags(ActivityFlags.ClearTop);
+                i.PutExtra("name",name);
                 StartActivity(i);
                 Finish();
             } else

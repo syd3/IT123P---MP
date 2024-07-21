@@ -14,7 +14,7 @@ namespace IT123P___MP
     {
         ImageView upperImg, lowerImg, feetImg, acc1Img, acc2Img, acc3Img;
         TextView outfit, occasion, desc;
-        Button back;
+        Button back, drop;
         string res;
 
         HttpWebRequest request;
@@ -36,6 +36,7 @@ namespace IT123P___MP
             occasion = FindViewById<TextView>(Resource.Id.textView3);
             desc = FindViewById<TextView>(Resource.Id.textView4);
             back = FindViewById<Button>(Resource.Id.button1);
+            drop = FindViewById<Button>(Resource.Id.del_btn);
 
             string outfitName = Intent.GetStringExtra("outfitName");
             string name = Intent.GetStringExtra("name");
@@ -43,6 +44,24 @@ namespace IT123P___MP
             back.Click += delegate
             {
                 Intent i = new Intent(this, typeof(viewOutfit));
+                i.SetFlags(ActivityFlags.ReorderToFront);
+                StartActivity(i);
+                Finish();
+            };
+
+            drop.Click += delegate
+            {
+                string local_ip = UtilityClass.ip;
+                request = (HttpWebRequest)WebRequest.Create($"http://{local_ip}/REST/IT123P/MP/API/drop_outfit.php?user={name}&name={outfitName}");
+                response = (HttpWebResponse)request.GetResponse();
+
+                response.Close();
+                response.Dispose();
+                request.Abort();
+                request = null;
+                response = null;
+
+                Intent i = new Intent(this, typeof(home));
                 i.SetFlags(ActivityFlags.ReorderToFront);
                 StartActivity(i);
                 Finish();
@@ -90,6 +109,12 @@ namespace IT123P___MP
             {
                 acc3Img.SetImageBitmap(BitmapFactory.DecodeResource(this.Resources, Android.Resource.Drawable.IcMenuGallery));
             }
+
+            response.Close();
+            response.Dispose();
+            request.Abort();
+            request = null;
+            response = null;
         }
     }
 }
