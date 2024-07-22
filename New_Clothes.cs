@@ -63,7 +63,10 @@ namespace IT123P___MP
             upload.Click += delegate
             {
                 if (bmp == null)
-                { return; }
+                {
+                    Toast.MakeText(this, "Please import an image", ToastLength.Short).Show();
+                    return;
+                }
                 else
                 {
                     Submit();

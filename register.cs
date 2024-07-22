@@ -76,6 +76,10 @@ namespace IT123P___MP
                     StartActivity(i);
                     Finish();
                 }
+
+                reader.Dispose();
+                response.Close();
+                response.Dispose();
             }
         }
     }

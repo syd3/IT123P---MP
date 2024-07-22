@@ -13,6 +13,7 @@ namespace IT123P___MP
     [Activity(Label = "viewOutfit", Theme = "@style/Theme.Design")]
     public class viewOutfit : Activity
     {
+        TextView tv2;
         Button back;
         string res;
 
@@ -25,7 +26,8 @@ namespace IT123P___MP
             SetContentView(Resource.Layout.view_outfits);
 
             FlowLayout container = FindViewById<FlowLayout>(Resource.Id.clothes_container);
-            
+
+            tv2 = FindViewById<TextView>(Resource.Id.textView2);
             back = FindViewById<Button>(Resource.Id.button5);
 
             string name = Intent.GetStringExtra("name");
@@ -46,6 +48,12 @@ namespace IT123P___MP
             using JsonDocument doc = JsonDocument.Parse(res);
             JsonElement root = doc.RootElement;
 
+            if (root.GetArrayLength() == 0)
+            {
+                tv2.Text = "No Outfits";
+                tv2.Visibility = ViewStates.Visible;
+            }
+
             for (int i = 0; i < root.GetArrayLength(); i++)
             {
                 JsonElement element = root[i].Clone();
@@ -63,6 +71,10 @@ namespace IT123P___MP
 
                 container.AddView(child);
             }
+
+            reader.Dispose();
+            response.Close();
+            response.Dispose();
         }
     }
 }

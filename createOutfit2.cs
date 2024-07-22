@@ -77,6 +77,10 @@ namespace IT123P___MP
                 {
                     Toast.MakeText(this, "Failed to create outfit", ToastLength.Short).Show();
                 }
+
+                reader.Dispose();
+                response.Close();
+                response.Dispose();
             }
         }
     }

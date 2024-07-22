@@ -113,6 +113,12 @@ namespace IT123P___MP
                 child.SetImageBitmap(bitmap);
                 
                 container.AddView(child);
+
+                imageBitmap.Dispose();
+                bitmap.Dispose();
+                reader.Dispose();
+                response.Close();
+                response.Dispose();
             }
         }
     }

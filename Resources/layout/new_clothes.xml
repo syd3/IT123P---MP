@@ -22,9 +22,10 @@
                 android:gravity="center" />
             <ImageView
                 android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView" />
+                android:layout_width="248.0dp"
+                android:layout_height="179.5dp"
+                android:id="@+id/imageView"
+                android:layout_gravity="center" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:minWidth="25px"
